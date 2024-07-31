@@ -48,7 +48,7 @@
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
-    "pnpm": "^9.2.0",
+    "pnpm": "^9.6.0",
     "qrcode": "^1.5.3",
     "qs": "^6.12.1",
     "url": "^0.11.3",
