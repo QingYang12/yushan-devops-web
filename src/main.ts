@@ -35,11 +35,13 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 import './permission'
-
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // 创建实例
 const setupAll = async () => {
   const app = createApp(App)
-
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
   await setupI18n(app)
 
   setupStore(app)

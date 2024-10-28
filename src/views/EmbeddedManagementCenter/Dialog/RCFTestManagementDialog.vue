@@ -13,7 +13,7 @@ import Write from './components/Write.vue'
 import Detail from './components/Detail.vue'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { BaseButton } from '@/components/Button'
-
+import { handpushApi ,handApi} from '@/api/embedded'
 const ids = ref<string[]>([])
 
 const { tableRegister, tableState, tableMethods } = useTable({
@@ -263,7 +263,22 @@ const action = (row: TableData, type: string) => {
   currentRow.value = row
   dialogVisible.value = true
 }
-
+const handpush = async (topic: string, group: string,message: string) => {
+  let params = {
+    topic: topic,
+    group: group,
+    message: message
+  }
+  await handpushApi(params);
+}
+const hand = async (topic: string, group: string) => {
+  let params = {
+    topic: topic,
+    group: group
+  }
+  let res:any=await handApi(params);
+  console.log("res: ",res);
+}
 const writeRef = ref<ComponentRef<typeof Write>>()
 
 const saveLoading = ref(false)
@@ -296,9 +311,10 @@ const save = async () => {
       <BaseButton :loading="delLoading" type="danger" @click="delData(null)">
         {{ t('exampleDemo.del') }}
       </BaseButton>
+      <BaseButton type="primary" @click="hand('testtopic','testtopicg')">测试</BaseButton>
     </div>
 
-    <Table
+    <!--<Table
       v-model:pageSize="pageSize"
       v-model:currentPage="currentPage"
       :columns="allSchemas.tableColumns"
@@ -308,7 +324,35 @@ const save = async () => {
         total: total
       }"
       @register="tableRegister"
-    />
+    />-->
+    <br/>
+    <br/>
+    <div  style="width:100%;height: 750px; position: relative;">
+      <div  style="width: 300px;height: 700px;background-color: #F9FFE4; margin: 0 auto; top: 50%; transform: translateY(-50%); position: absolute;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);border-radius: 15px;">
+        <div style="width: 90%;height: 25%;margin: 0 auto;background-color: #DCFFCC;position: relative;border-top-left-radius: 20px; border-top-right-radius: 20px;">
+          <div  style="width: 50px;height: 50px;top:10px;left:115px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','5')"    ><el-icon><Top /></el-icon></div><!-- 左边  -->
+          <div  style="width: 50px;height: 50px;top:110px;left:115px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','6')"    ><el-icon><Bottom /></el-icon></div> <!-- 右边  -->
+          <div  style="width: 50px;height: 50px;top:60px;left:50px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','2')"    ><el-icon><Back /></el-icon></div><!-- 下边  -->
+          <div  style="width: 50px;height: 50px;top:60px;left:180px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','1')"    ><el-icon><Right /></el-icon></div><!-- 上边  -->
+          <div  style="width: 20px;height: 40px;top:120px;left:240px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','9')"    ></div>
+          
+        </div>
+        <div style="width: 90%;height: 50%;margin: 0 auto;background-color: #FFD58D;position: relative;display: flex; justify-content: center; align-items: center;">
+          <div style="width: 90%;height: 90%;border: 2px solid #FF7E41;border-radius: 10px;">
+            <div style="width: 100%;height: 100%;background-image:url('/public/logo.png');background-size: contain; background-repeat: no-repeat; background-position: center;transform: rotate(90deg); transform-origin: center center;"></div>
+          </div>
+        </div>
+        <div style="width: 90%;height: 25%;margin: 0 auto;background-color: #DCFFCC;position: relative;border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+          <div  style="width: 20px;height: 40px;top:9px;left:240px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','9')"    ></div>
+            <div  style="width: 50px;height: 50px;top:10px;left:115px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','7')"    >X</div>
+            <div  style="width: 50px;height: 50px;top:110px;left:115px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','8')"    >B</div>
+            <div  style="width: 50px;height: 50px;top:60px;left:50px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','4')"    >A</div>
+            <div  style="width: 50px;height: 50px;top:60px;left:180px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','3')"    >Y</div>
+        </div>
+      </div>
+    </div>
+    
+
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle">

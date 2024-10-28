@@ -119,7 +119,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     name: '运维管理中心',
     meta: {
       title: "运维管理中心",
-      icon: 'vi-ep:management',
+      icon: 'vi-ep:platform',
       alwaysShow: true
     },
     children: [
@@ -140,7 +140,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     name: '嵌入式管理中心',
     meta: {
       title: "嵌入式管理中心",
-      icon: 'vi-ep:management',
+      icon: 'vi-ep:grid',
       alwaysShow: true
     },
     children: [
@@ -168,7 +168,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     name: '业务管理中心',
     meta: {
       title: "业务管理中心",
-      icon: 'vi-ep:management',
+      icon: 'vi-ep:briefcase',
       alwaysShow: true
     },
     children: [
@@ -189,7 +189,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     name: '测试中心',
     meta: {
       title: "测试中心",
-      icon: 'vi-ep:management',
+      icon: 'vi-ep:checked',
       alwaysShow: true
     },
     children: [
@@ -210,7 +210,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     name: '实验中心',
     meta: {
       title: "实验中心",
-      icon: 'vi-ep:management',
+      icon: 'vi-ep:flag',
       alwaysShow: true
     },
     children: [
@@ -231,7 +231,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     name: '数据中心',
     meta: {
       title: "数据中心",
-      icon: 'vi-ep:management',
+      icon: 'vi-ep:trend-charts',
       alwaysShow: true
     },
     children: [
