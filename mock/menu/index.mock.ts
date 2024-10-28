@@ -91,6 +91,358 @@ export default [
               ]
             },
             {
+              path: '/example',
+              component: '#',
+              redirect: '/example/example-dialog',
+              name: 'Example',
+              status: 1,
+              id: 12,
+              type: 0,
+              parentId: undefined,
+              title: '集群管理中心',
+              meta: {
+                title: '集群管理中心',
+                icon: 'vi-ep:management',
+                alwaysShow: true
+              },
+              children: [
+                {
+                  path: 'example-dialog',
+                  component: 'views/Example/Dialog/ExampleDialog',
+                  name: 'ExampleDialog',
+                  status: 1,
+                  id: 13,
+                  type: 1,
+                  parentId: 12,
+                  title: '资源工具管理',
+                  permissionList: [
+                    {
+                      id: 1,
+                      label: '新增',
+                      value: 'add'
+                    },
+                    {
+                      id: 2,
+                      label: '编辑',
+                      value: 'edit'
+                    },
+                    {
+                      id: 3,
+                      label: '删除',
+                      value: 'delete'
+                    },
+                    {
+                      id: 4,
+                      label: '查看',
+                      value: 'view'
+                    }
+                  ],
+                  meta: {
+                    title: '资源工具管理'
+                  }
+                }
+              ]
+            },
+            {
+              path: '/example',
+              component: '#',
+              redirect: '/example/example-dialog',
+              name: 'Example',
+              status: 1,
+              id: 12,
+              type: 0,
+              parentId: undefined,
+              title: '嵌入式管理中心',
+              meta: {
+                title: '嵌入式管理中心',
+                icon: 'vi-ep:management',
+                alwaysShow: true
+              },
+              children: [
+                {
+                  path: 'example-dialog',
+                  component: 'views/Example/Dialog/ExampleDialog',
+                  name: 'ExampleDialog',
+                  status: 1 ,
+                  id: 13,
+                  type: 1,
+                  parentId: 12,
+                  title: '遥控功能管理',
+                  permissionList: [
+                    {
+                      id: 1,
+                      label: '新增',
+                      value: 'add'
+                    },
+                    {
+                      id: 2,
+                      label: '编辑',
+                      value: 'edit'
+                    },
+                    {
+                      id: 3,
+                      label: '删除',
+                      value: 'delete'
+                    },
+                    {
+                      id: 4,
+                      label: '查看',
+                      value: 'view'
+                    }
+                  ],
+                  meta: {
+                    title: '遥控功能管理'
+                  }
+                },{
+                  path: 'example-dialog',
+                  component: 'views/Example/Dialog/ExampleDialog',
+                  name: 'ExampleDialog',
+                  status: 1,
+                  id: 13,
+                  type: 1,
+                  parentId: 12,
+                  title: '遥控器测试',
+                  permissionList: [
+                    {
+                      id: 1,
+                      label: '新增',
+                      value: 'add'
+                    },
+                    {
+                      id: 2,
+                      label: '编辑',
+                      value: 'edit'
+                    },
+                    {
+                      id: 3,
+                      label: '删除',
+                      value: 'delete'
+                    },
+                    {
+                      id: 4,
+                      label: '查看',
+                      value: 'view'
+                    }
+                  ],
+                  meta: {
+                    title: '遥控器测试'
+                  }
+                }
+              ]
+            },
+            {
+              path: '/example',
+              component: '#',
+              redirect: '/example/example-dialog',
+              name: 'Example',
+              status: 1,
+              id: 12,
+              type: 0,
+              parentId: undefined,
+              title: '业务管理中心',
+              meta: {
+                title: '业务管理中心',
+                icon: 'vi-ep:management',
+                alwaysShow: true
+              },
+              children: [
+                {
+                  path: 'example-dialog',
+                  component: 'views/Example/Dialog/ExampleDialog',
+                  name: 'ExampleDialog',
+                  status: 1,
+                  id: 13,
+                  type: 1,
+                  parentId: 12,
+                  title: 'X业务管理',
+                  permissionList: [
+                    {
+                      id: 1,
+                      label: '新增',
+                      value: 'add'
+                    },
+                    {
+                      id: 2,
+                      label: '编辑',
+                      value: 'edit'
+                    },
+                    {
+                      id: 3,
+                      label: '删除',
+                      value: 'delete'
+                    },
+                    {
+                      id: 4,
+                      label: '查看',
+                      value: 'view'
+                    }
+                  ],
+                  meta: {
+                    title: 'X业务管理'
+                  }
+                }
+              ]
+            },
+            {
+              path: '/example',
+              component: '#',
+              redirect: '/example/example-dialog',
+              name: 'Example',
+              status: 1,
+              id: 12,
+              type: 0,
+              parentId: undefined,
+              title: '测试中心',
+              meta: {
+                title: '测试中心',
+                icon: 'vi-ep:management',
+                alwaysShow: true
+              },
+              children: [
+                {
+                  path: 'example-dialog',
+                  component: 'views/Example/Dialog/ExampleDialog',
+                  name: 'ExampleDialog',
+                  status: 1,
+                  id: 13,
+                  type: 1,
+                  parentId: 12,
+                  title: 'A测试管理',
+                  permissionList: [
+                    {
+                      id: 1,
+                      label: '新增',
+                      value: 'add'
+                    },
+                    {
+                      id: 2,
+                      label: '编辑',
+                      value: 'edit'
+                    },
+                    {
+                      id: 3,
+                      label: '删除',
+                      value: 'delete'
+                    },
+                    {
+                      id: 4,
+                      label: '查看',
+                      value: 'view'
+                    }
+                  ],
+                  meta: {
+                    title: 'A测试管理'
+                  }
+                }
+              ]
+            },
+            {
+              path: '/example',
+              component: '#',
+              redirect: '/example/example-dialog',
+              name: 'Example',
+              status: 1,
+              id: 12,
+              type: 0,
+              parentId: undefined,
+              title: '实验中心',
+              meta: {
+                title: '实验中心',
+                icon: 'vi-ep:management',
+                alwaysShow: true
+              },
+              children: [
+                {
+                  path: 'example-dialog',
+                  component: 'views/Example/Dialog/ExampleDialog',
+                  name: 'ExampleDialog',
+                  status: 1,
+                  id: 13,
+                  type: 1,
+                  parentId: 12,
+                  title: 'A实验管理',
+                  permissionList: [
+                    {
+                      id: 1,
+                      label: '新增',
+                      value: 'add'
+                    },
+                    {
+                      id: 2,
+                      label: '编辑',
+                      value: 'edit'
+                    },
+                    {
+                      id: 3,
+                      label: '删除',
+                      value: 'delete'
+                    },
+                    {
+                      id: 4,
+                      label: '查看',
+                      value: 'view'
+                    }
+                  ],
+                  meta: {
+                    title: 'A实验管理'
+                  }
+                }
+              ]
+            },
+            {
+              path: '/example',
+              component: '#',
+              redirect: '/example/example-dialog',
+              name: 'Example',
+              status: 1,
+              id: 12,
+              type: 0,
+              parentId: undefined,
+              title: '数据中心',
+              meta: {
+                title: '数据中心',
+                icon: 'vi-ep:management',
+                alwaysShow: true
+              },
+              children: [
+                {
+                  path: 'example-dialog',
+                  component: 'views/Example/Dialog/ExampleDialog',
+                  name: 'ExampleDialog',
+                  status: 1,
+                  id: 13,
+                  type: 1,
+                  parentId: 12,
+                  title: '数据分析A管理',
+                  permissionList: [
+                    {
+                      id: 1,
+                      label: '新增',
+                      value: 'add'
+                    },
+                    {
+                      id: 2,
+                      label: '编辑',
+                      value: 'edit'
+                    },
+                    {
+                      id: 3,
+                      label: '删除',
+                      value: 'delete'
+                    },
+                    {
+                      id: 4,
+                      label: '查看',
+                      value: 'view'
+                    }
+                  ],
+                  meta: {
+                    title: '数据分析A管理'
+                  }
+                }
+              ]
+            },
+            {
               path: '/external-link',
               component: '#',
               meta: {

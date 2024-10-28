@@ -73,7 +73,7 @@ watch(
           }
         ]"
       >
-        {{ title }}
+        {{ "WHDevOps" }}
       </div>
     </router-link>
   </div>

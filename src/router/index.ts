@@ -5,9 +5,9 @@ import { Layout, getParentLayout } from '@/utils/routerHelper'
 import { useI18n } from '@/hooks/web/useI18n'
 import { NO_RESET_WHITE_LIST } from '@/constants'
 
-const { t } = useI18n()
+const { t } = useI18n()  
 
-export const constantRouterMap: AppRouteRecordRaw[] = [
+export const constantRouterMap: AppRouteRecordRaw[] = [ 
   {
     path: '/',
     component: Layout,
@@ -108,6 +108,139 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: t('router.workplace'),
           noCache: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/DEVOPSManagementCenter',
+    component: Layout,
+    redirect: '/DEVOPSManagementCenter/ResourceToolManagementDialog',
+    name: '运维管理中心',
+    meta: {
+      title: "运维管理中心",
+      icon: 'vi-ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'ResourceToolManagementDialog',
+        component: () => import('@/views/DEVOPSManagementCenter/Dialog/ResourceToolManagementDialog.vue'),
+        name: '资源工具管理',
+        meta: {
+          title: '资源工具管理'
+        }
+      }
+    ]
+  },
+  {
+    path: '/EmbeddedManagementCenter',
+    component: Layout,
+    redirect: '/EmbeddedManagementCenter/RCFTestManagementDialog',
+    name: '嵌入式管理中心',
+    meta: {
+      title: "嵌入式管理中心",
+      icon: 'vi-ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'RCFManagementDialog',
+        component: () => import('@/views/EmbeddedManagementCenter/Dialog/RCFManagementDialog.vue'),
+        name: '遥控功能管理',
+        meta: {
+          title: '遥控功能管理'
+        }
+      },{
+        path: 'RCFTestManagementDialog',
+        component: () => import('@/views/EmbeddedManagementCenter/Dialog/RCFTestManagementDialog.vue'),
+        name: '遥控器测试',
+        meta: {
+          title: '遥控器测试'
+        }
+      }
+    ]
+  },
+  {
+    path: '/BusinessManagementCenter',
+    component: Layout,
+    redirect: '/BusinessManagementCenter/BusinessManagementDialog',
+    name: '业务管理中心',
+    meta: {
+      title: "业务管理中心",
+      icon: 'vi-ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'BusinessManagementDialog',
+        component: () => import('@/views/BusinessManagementCenter/Dialog/BusinessManagementDialog.vue'),
+        name: '业务管理',
+        meta: {
+          title: '业务管理'
+        }
+      }
+    ]
+  },
+  {
+    path: '/TestManagementCenter',
+    component: Layout,
+    redirect: '/TestManagementCenter/TestManagementDialog',
+    name: '测试中心',
+    meta: {
+      title: "测试中心",
+      icon: 'vi-ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'TestManagementDialog',
+        component: () => import('@/views/TestManagementCenter/Dialog/TestManagementDialog.vue'),
+        name: '测试管理',
+        meta: {
+          title: '测试管理'
+        }
+      }
+    ]
+  },
+  {
+    path: '/ExperimentalManagementCenter',
+    component: Layout,
+    redirect: '/ExperimentalManagementCenter/ExperimentalManagementDialog',
+    name: '实验中心',
+    meta: {
+      title: "实验中心",
+      icon: 'vi-ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'ExperimentalManagementDialog',
+        component: () => import('@/views/ExperimentalManagementCenter/Dialog/ExperimentalManagementDialog.vue'),
+        name: '实验管理',
+        meta: {
+          title: '实验管理'
+        }
+      }
+    ]
+  },
+  {
+    path: '/DataManagementCenter',
+    component: Layout,
+    redirect: '/DataManagementCenter/DataManagementDialog',
+    name: '数据中心',
+    meta: {
+      title: "数据中心",
+      icon: 'vi-ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'DataManagementDialog',
+        component: () => import('@/views/DataManagementCenter/Dialog/DataManagementDialog.vue'),
+        name: '数据分析管理',
+        meta: {
+          title: '数据分析管理'
         }
       }
     ]
