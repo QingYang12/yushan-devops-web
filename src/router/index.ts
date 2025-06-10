@@ -162,6 +162,27 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     ]
   },
   {
+    path: '/AIwiew',
+    component: Layout,
+    redirect: '/AIwiew/AIwiew',
+    name: 'AI管理中心', 
+    meta: {
+      title: "AI管理中心",
+      icon: 'vi-ep:grid',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'AIwiew',
+        component: () => import('@/views/aiwiew/aiview.vue'),
+        name: ' AI助手',
+        meta: {
+          title: 'AI助手'
+        }
+      }
+    ]
+  },
+  {
     path: '/BusinessManagementCenter',
     component: Layout,
     redirect: '/BusinessManagementCenter/BusinessManagementDialog',

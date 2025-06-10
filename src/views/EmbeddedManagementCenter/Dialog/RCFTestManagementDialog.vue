@@ -3,7 +3,7 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElTag } from 'element-plus'
+import { ElRadio, ElRadioGroup, ElTag } from 'element-plus'
 import { Table } from '@/components/Table'
 import { getTableListApi, saveTableApi, delTableListApi } from '@/api/table'
 import { useTable } from '@/hooks/web/useTable'
@@ -42,6 +42,41 @@ const setSearchParams = (params: any) => {
   searchParams.value = params
   getList()
 }
+
+const getDeviceType = () => {
+  const ua = navigator.userAgent
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)) {
+    return 'mobile' // 手机
+  } else {
+    return 'pc' // PC
+  }
+}
+const handleDeviceChange = () => {
+  //console.log('当前选择的设备类型:', value)
+  // 在这里可以执行其他逻辑，比如请求接口、更新视图等
+  //const deviceType = ref('mobile') // 默认值可以是 'mobile' 或 'pc'
+  const phoneDiv = document.getElementById('phoneDiv');
+  const pcDiv = document.getElementById('pcDiv');
+
+  if (deviceType.value === 'mobile') {
+    phoneDiv && (phoneDiv.style.display = 'block');
+    pcDiv && (pcDiv.style.display = 'none');
+  } else {
+    phoneDiv && (phoneDiv.style.display = 'none');
+    pcDiv && (pcDiv.style.display = 'block');
+  }
+  
+
+}
+// 👇 定义 deviceType 并初始化为 'mobile'
+let deviceType = ref('mobile') // 默认值可以是 'mobile' 或 'pc'
+
+
+deviceType = ref(getDeviceType())
+
+
+handleDeviceChange();
+
 
 const { t } = useI18n()
 
@@ -263,22 +298,38 @@ const action = (row: TableData, type: string) => {
   currentRow.value = row
   dialogVisible.value = true
 }
-const handpush = async (topic: string, group: string,message: string) => {
+const handpush = async (topic: string, group: string,message: string,type: string) => {
   let params = {
     topic: topic,
     group: group,
-    message: message
+    message: message,
+    type: type
   }
   await handpushApi(params);
 }
-const hand = async (topic: string, group: string) => {
+const hand = async (topic: string, group: string, type: string) => {
   let params = {
     topic: topic,
-    group: group
+    group: group,
+    type:type
   }
   let res:any=await handApi(params);
   console.log("res: ",res);
 }
+const handAll = async (topic: string, group: string, type: string) => {
+  let params = {
+    topic: topic,
+    group: group,
+    type:type
+  }
+  for(var i=0;i<20;i++){
+    let res:any=await handApi(params);
+    console.log("res: ",res);
+  }
+  
+}
+
+
 const writeRef = ref<ComponentRef<typeof Write>>()
 
 const saveLoading = ref(false)
@@ -300,18 +351,25 @@ const save = async () => {
     }
   }
 }
+
+
+
 </script>
 
 <template>
   <ContentWrap>
     <Search :schema="allSchemas.searchSchema" @search="setSearchParams" @reset="setSearchParams" />
-
+    <ElRadioGroup v-model="deviceType" @change="handleDeviceChange">
+      <ElRadio label="mobile">手机</ElRadio>
+      <ElRadio label="pc">PC</ElRadio>
+    </ElRadioGroup>
     <div class="mb-10px">
       <BaseButton type="primary" @click="AddAction">{{ t('exampleDemo.add') }}</BaseButton>
       <BaseButton :loading="delLoading" type="danger" @click="delData(null)">
         {{ t('exampleDemo.del') }}
       </BaseButton>
-      <BaseButton type="primary" @click="hand('testtopic','testtopicg')">测试</BaseButton>
+      <BaseButton type="primary" @click="hand('testtopic','testtopicg','c')">测试</BaseButton>
+      <BaseButton type="primary" @click="handAll('testtopic','testtopicg','c')">清空命令</BaseButton>
     </div>
 
     <!--<Table
@@ -327,14 +385,14 @@ const save = async () => {
     />-->
     <br/>
     <br/>
-    <div  style="width:100%;height: 750px; position: relative;">
+    <div id="phoneDiv" style="width:100%;height: 750px; position: relative;display: block;">
       <div  style="width: 300px;height: 700px;background-color: #F9FFE4; margin: 0 auto; top: 50%; transform: translateY(-50%); position: absolute;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);border-radius: 15px;">
         <div style="width: 90%;height: 25%;margin: 0 auto;background-color: #DCFFCC;position: relative;border-top-left-radius: 20px; border-top-right-radius: 20px;">
-          <div  style="width: 50px;height: 50px;top:10px;left:115px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','5')"    ><el-icon><Top /></el-icon></div><!-- 左边  -->
-          <div  style="width: 50px;height: 50px;top:110px;left:115px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','6')"    ><el-icon><Bottom /></el-icon></div> <!-- 右边  -->
-          <div  style="width: 50px;height: 50px;top:60px;left:50px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','2')"    ><el-icon><Back /></el-icon></div><!-- 下边  -->
-          <div  style="width: 50px;height: 50px;top:60px;left:180px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','1')"    ><el-icon><Right /></el-icon></div><!-- 上边  -->
-          <div  style="width: 20px;height: 40px;top:120px;left:240px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','9')"    ></div>
+          <div  style="width: 50px;height: 50px;top:10px;left:115px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"     @touchstart="handpush('testtopic','testtopicg','5','c')"     @touchend="handpush('testtopic','testtopicg','9','c')"><el-icon><Top /></el-icon></div><!-- 左边  -->
+          <div  style="width: 50px;height: 50px;top:110px;left:115px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @touchstart="handpush('testtopic','testtopicg','6','c')"        @touchend="handpush('testtopic','testtopicg','9','c')"><el-icon><Bottom /></el-icon></div> <!-- 右边  -->
+          <div  style="width: 50px;height: 50px;top:60px;left:50px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"     @touchstart="handpush('testtopic','testtopicg','2','c')"         @touchend="handpush('testtopic','testtopicg','9','c')"><el-icon><Back /></el-icon></div><!-- 下边  -->
+          <div  style="width: 50px;height: 50px;top:60px;left:180px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"     @touchstart="handpush('testtopic','testtopicg','1','c')"      @touchend="handpush('testtopic','testtopicg','9','c')"><el-icon><Right /></el-icon></div><!-- 上边  -->
+          <div  style="width: 20px;height: 40px;top:120px;left:240px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"     @touchstart="handpush('testtopic','testtopicg','9','c')"      @touchend="handpush('testtopic','testtopicg','9','c')"></div>
           
         </div>
         <div style="width: 90%;height: 50%;margin: 0 auto;background-color: #FFD58D;position: relative;display: flex; justify-content: center; align-items: center;">
@@ -343,15 +401,38 @@ const save = async () => {
           </div>
         </div>
         <div style="width: 90%;height: 25%;margin: 0 auto;background-color: #DCFFCC;position: relative;border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
-          <div  style="width: 20px;height: 40px;top:9px;left:240px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','9')"    ></div>
-            <div  style="width: 50px;height: 50px;top:10px;left:115px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','7')"    >X</div>
-            <div  style="width: 50px;height: 50px;top:110px;left:115px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','8')"    >B</div>
-            <div  style="width: 50px;height: 50px;top:60px;left:50px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','4')"    >A</div>
-            <div  style="width: 50px;height: 50px;top:60px;left:180px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @click="handpush('testtopic','testtopicg','3')"    >Y</div>
+          <div  style="width: 20px;height: 40px;top:9px;left:240px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"     @touchstart="handpush('testtopic','testtopicg','9','c')"       @touchend="handpush('testtopic','testtopicg','9','c')"  ></div>
+            <div  style="width: 50px;height: 50px;top:10px;left:115px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"     @touchstart="handpush('testtopic','testtopicg','7','c')"      @touchend="handpush('testtopic','testtopicg','9','c')" >X</div>
+            <div  style="width: 50px;height: 50px;top:110px;left:115px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @touchstart="handpush('testtopic','testtopicg','8','c')"     @touchend="handpush('testtopic','testtopicg','9','c')"  >B</div>
+            <div  style="width: 50px;height: 50px;top:60px;left:50px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"      @touchstart="handpush('testtopic','testtopicg','3','c')"     @touchend="handpush('testtopic','testtopicg','9','c')" >A</div>
+            <div  style="width: 50px;height: 50px;top:60px;left:180px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"     @touchstart="handpush('testtopic','testtopicg','4','c')"     @touchend="handpush('testtopic','testtopicg','9','c')"  >Y</div>
         </div>
       </div>
     </div>
-    
+    <div id="pcDiv" style="width:100%;height: 750px; position: relative;display: none;">
+      <div  style="width: 300px;height: 700px;background-color: #F9FFE4; margin: 0 auto; top: 50%; transform: translateY(-50%); position: absolute;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);border-radius: 15px;">
+        <div style="width: 90%;height: 25%;margin: 0 auto;background-color: #DCFFCC;position: relative;border-top-left-radius: 20px; border-top-right-radius: 20px;">
+          <div  style="width: 50px;height: 50px;top:10px;left:115px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','5','c')"    @mouseup="handpush('testtopic','testtopicg','9','c')" ><el-icon><Top /></el-icon></div><!-- 左边  -->
+          <div  style="width: 50px;height: 50px;top:110px;left:115px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','6','c')"       @mouseup="handpush('testtopic','testtopicg','9','c')"  ><el-icon><Bottom /></el-icon></div> <!-- 右边  -->
+          <div  style="width: 50px;height: 50px;top:60px;left:50px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','2','c')"    @mouseup="handpush('testtopic','testtopicg','9','c')" ><el-icon><Back /></el-icon></div><!-- 下边  -->
+          <div  style="width: 50px;height: 50px;top:60px;left:180px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','1','c')"      @mouseup="handpush('testtopic','testtopicg','9','c')"  ><el-icon><Right /></el-icon></div><!-- 上边  -->
+          <div  style="width: 20px;height: 40px;top:120px;left:240px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','9','c')"         @mouseup="handpush('testtopic','testtopicg','9','c')" ></div>
+          
+        </div>
+        <div style="width: 90%;height: 50%;margin: 0 auto;background-color: #FFD58D;position: relative;display: flex; justify-content: center; align-items: center;">
+          <div style="width: 90%;height: 90%;border: 2px solid #FF7E41;border-radius: 10px;">
+            <div style="width: 100%;height: 100%;background-image:url('/public/logo.png');background-size: contain; background-repeat: no-repeat; background-position: center;transform: rotate(90deg); transform-origin: center center;"></div>
+          </div>
+        </div>
+        <div style="width: 90%;height: 25%;margin: 0 auto;background-color: #DCFFCC;position: relative;border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+          <div  style="width: 20px;height: 40px;top:9px;left:240px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','9','c')"       @mouseup="handpush('testtopic','testtopicg','9','c')"  ></div>
+            <div  style="width: 50px;height: 50px;top:10px;left:115px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','7','c')"     @mouseup="handpush('testtopic','testtopicg','9','c')"  >X</div>
+            <div  style="width: 50px;height: 50px;top:110px;left:115px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','8','c')"     @mouseup="handpush('testtopic','testtopicg','9','c')"   >B</div>
+            <div  style="width: 50px;height: 50px;top:60px;left:50px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','3','c')"     @mouseup="handpush('testtopic','testtopicg','9','c')"  >A</div>
+            <div  style="width: 50px;height: 50px;top:60px;left:180px;background-color: #FF8537;position: absolute;  display: flex; justify-content: center; align-items: center;font-size:30px;transform: rotate(90deg); transform-origin: center center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','4','c')"    @mouseup="handpush('testtopic','testtopicg','9','c')"   >Y</div>
+        </div>
+      </div>
+    </div>
 
   </ContentWrap>
 

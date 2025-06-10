@@ -23,11 +23,11 @@ import * as https from 'https';
 const { readFileSync } = fs;
 
 const options = {
-  key: readFileSync('./server.key'), // 私钥路径
-  cert: readFileSync('./server.crt'), // 证书路径
+  key: readFileSync('./test.wanghaonet.com.key'), // 私钥路径
+  cert: readFileSync('./test.wanghaonet.com.pem'), // 证书路径
   // 这里可以添加其他SSL/TLS相关的配置，例如ciphers等
-  ciphers: 'TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA:kEDH+AESGCM:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK:!SRP:!CAMELLIA',
-  secureProtocol: 'TLSv1_2_method', // 或者 'TLS_method' 以支持TLS 1.2及更高版本
+  //ciphers: 'TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA:kEDH+AESGCM:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK:!SRP:!CAMELLIA',
+  //secureProtocol: 'TLSv1_2_method', // 或者 'TLS_method' 以支持TLS 1.2及更高版本
 };
 
 
@@ -153,13 +153,20 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
     server: {
       port: 8080,
-      //https: options,
+      https: options,
+      cors: true,
       proxy: {
         // 选项写法
         '/yushandevops': {
           target: 'http://192.168.31.105:8088',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/yushandevops/, '')
+        },
+        '/chat': {
+          target: 'http://chat.wanghaonet.com',
+          changeOrigin: true,
+          //rewrite: (path) => path.replace(/^\/chat/, ''),
+          secure: false
         }
       },
       hmr: {
