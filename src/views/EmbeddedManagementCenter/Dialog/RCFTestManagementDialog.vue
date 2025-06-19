@@ -3,8 +3,7 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElRadio, ElRadioGroup, ElTag } from 'element-plus'
-import { Table } from '@/components/Table'
+import { ElRadio, ElRadioGroup, ElTag,ElSwitch ,ElText} from 'element-plus'
 import { getTableListApi, saveTableApi, delTableListApi } from '@/api/table'
 import { useTable } from '@/hooks/web/useTable'
 import { TableData } from '@/api/table/types'
@@ -13,7 +12,8 @@ import Write from './components/Write.vue'
 import Detail from './components/Detail.vue'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { BaseButton } from '@/components/Button'
-import { handpushApi ,handApi} from '@/api/embedded'
+import { handpushApi ,handApi ,handImageApi ,startmodelApi} from '@/api/embedded'
+import  {nextTick} from 'vue'
 const ids = ref<string[]>([])
 
 const { tableRegister, tableState, tableMethods } = useTable({
@@ -36,7 +36,14 @@ const { tableRegister, tableState, tableMethods } = useTable({
 })
 const { loading, dataList, total, currentPage, pageSize } = tableState
 const { getList, getElTableExpose, delList } = tableMethods
-
+//定义区域  
+const state = reactive({
+  videoStatus:false,
+  modelStatus:false,
+  intervalId: null as number | null,
+  imageUrl: null as string | null ,
+  imageUrl2:'/public/logo1.png'
+});
 const searchParams = ref({})
 const setSearchParams = (params: any) => {
   searchParams.value = params
@@ -352,7 +359,67 @@ const save = async () => {
   }
 }
 
+const startPolling = () => {
+      if (state.intervalId === null) {
+        state.intervalId = window.setInterval(() => {
+          let params = {}
+          handImageApi(params).then(res => {
+            console.log('API Response:', res)
+            const blob =  res.data
+            state.imageUrl = URL.createObjectURL(blob)
+            let container = document.getElementById('testimg');
+            if(container){
+              container.src=state.imageUrl;
+              container.style.display='block';
+            }
+            
+            nextTick(() => {
+              //console.log("imageUrl: ",state.imageUrl);
+              
+            });  
+          }).catch(err => {
+            console.error('API Error:', err)
+          })
+        }, 1000) // 每隔 3 秒请求一次
+      }
+    }
 
+    const stopPolling = () => {
+      if (state.intervalId !== null) {
+        window.clearInterval(state.intervalId)
+        state.intervalId = null
+        let container = document.getElementById('testimg');
+        if(container){
+          container.style.display='none';
+        }
+            
+      }
+    }
+const videoChange = (val) => {
+    state.videoStatus = val;
+    console.log("state.videoStatus: ",state.videoStatus);
+    if (state.videoStatus) {
+        startPolling()
+      } else {
+        stopPolling()
+      }
+}
+const modelChange = (val) => {
+    state.modelStatus = val;
+    console.log("state.modelStatus: ",state.modelStatus);
+    console.log(typeof state.modelStatus);
+    if (state.modelStatus==true) {
+      let params = {
+          modeltype: 'true'
+        }
+         startmodelApi(params);
+    } else {
+      let params = {
+         modeltype: 'false'
+        }
+         startmodelApi(params);
+    }
+}
 
 </script>
 
@@ -364,12 +431,21 @@ const save = async () => {
       <ElRadio label="pc">PC</ElRadio>
     </ElRadioGroup>
     <div class="mb-10px">
+      <ElText class="ml-8px!">摄像头：</ElText>
+      <ElSwitch type="primary"  v-model="state.videoStatus"      @change="videoChange" active-text="Open" inactive-text="Close"      />
+    </div>
+    <div class="mb-10px">
+      <ElText class="ml-8px!">模型自动操控：</ElText>
+      <ElSwitch type="primary"  v-model="state.modelStatus"      @change="modelChange" active-text="Open" inactive-text="Close"      />
+    </div>
+    <div class="mb-10px">
       <BaseButton type="primary" @click="AddAction">{{ t('exampleDemo.add') }}</BaseButton>
       <BaseButton :loading="delLoading" type="danger" @click="delData(null)">
         {{ t('exampleDemo.del') }}
       </BaseButton>
       <BaseButton type="primary" @click="hand('testtopic','testtopicg','c')">测试</BaseButton>
       <BaseButton type="primary" @click="handAll('testtopic','testtopicg','c')">清空命令</BaseButton>
+      
     </div>
 
     <!--<Table
@@ -385,6 +461,10 @@ const save = async () => {
     />-->
     <br/>
     <br/>
+    <div  style="position: relative;display: block;transform: rotate(90deg);top:486px;left:1px;z-index: 9999;border: 2px solid #FFD58D;border-radius: 10px;height: 220px;width: 300px;">
+      <img id="testimg"  style="width: 100%;height: 100%;display: none;"  src="/public/logo1.png"/>
+    </div>
+       
     <div id="phoneDiv" style="width:100%;height: 750px; position: relative;display: block;">
       <div  style="width: 300px;height: 700px;background-color: #F9FFE4; margin: 0 auto; top: 50%; transform: translateY(-50%); position: absolute;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);border-radius: 15px;">
         <div style="width: 90%;height: 25%;margin: 0 auto;background-color: #DCFFCC;position: relative;border-top-left-radius: 20px; border-top-right-radius: 20px;">
@@ -419,9 +499,13 @@ const save = async () => {
           <div  style="width: 20px;height: 40px;top:120px;left:240px;background-color: #FF8537;position: absolute;  align-items: center;border-radius: 20px;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);"    @mousedown="handpush('testtopic','testtopicg','9','c')"         @mouseup="handpush('testtopic','testtopicg','9','c')" ></div>
           
         </div>
-        <div style="width: 90%;height: 50%;margin: 0 auto;background-color: #FFD58D;position: relative;display: flex; justify-content: center; align-items: center;">
+         <div style="width: 90%;height: 50%;margin: 0 auto;background-color: #FFD58D;position: relative;display: flex; justify-content: center; align-items: center;">
+         
           <div style="width: 90%;height: 90%;border: 2px solid #FF7E41;border-radius: 10px;">
-            <div style="width: 100%;height: 100%;background-image:url('/public/logo.png');background-size: contain; background-repeat: no-repeat; background-position: center;transform: rotate(90deg); transform-origin: center center;"></div>
+           
+            <div id="center_logo" style="width: 100%;height: 100%;background-image:url('/public/logo.png');background-size: contain; background-repeat: no-repeat; background-position: center;transform: rotate(90deg); transform-origin: center center;">
+              
+            </div>
           </div>
         </div>
         <div style="width: 90%;height: 25%;margin: 0 auto;background-color: #DCFFCC;position: relative;border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
