@@ -1,20 +1,31 @@
 <script setup lang="tsx">
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
-import { Dialog } from '@/components/Dialog'
-import { useI18n } from '@/hooks/web/useI18n'
-import { ElTag } from 'element-plus'
+import {  useI18n } from '@/hooks/web/useI18n'
+import { ElTag,ElDivider } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, saveTableApi, delTableListApi } from '@/api/table'
+import { getTableListApi, delTableListApi } from '@/api/table'
 import { useTable } from '@/hooks/web/useTable'
 import { TableData } from '@/api/table/types'
-import { ref, unref, reactive } from 'vue'
-import Write from './components/Write.vue'
-import Detail from './components/Detail.vue'
+import { reactive, ref, unref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useEventBus } from '@/hooks/event/useEventBus'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { BaseButton } from '@/components/Button'
 
+defineOptions({
+  name: 'ExamplePage'
+})
+
+const { push } = useRouter()
+
 const ids = ref<string[]>([])
+
+const searchParams = ref({})
+const setSearchParams = (params: any) => {
+  searchParams.value = params
+  getList()
+}
 
 const { tableRegister, tableState, tableMethods } = useTable({
   fetchDataApi: async () => {
@@ -37,11 +48,17 @@ const { tableRegister, tableState, tableMethods } = useTable({
 const { loading, dataList, total, currentPage, pageSize } = tableState
 const { getList, getElTableExpose, delList } = tableMethods
 
-const searchParams = ref({})
-const setSearchParams = (params: any) => {
-  searchParams.value = params
-  getList()
-}
+getList()
+
+useEventBus({
+  name: 'getList',
+  callback: (type: string) => {
+    if (type === 'add') {
+      currentPage.value = 1
+    }
+    getList()
+  }
+})
 
 const { t } = useI18n()
 
@@ -233,17 +250,8 @@ const crudSchemas = reactive<CrudSchema[]>([
 // @ts-ignore
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
-const dialogVisible = ref(false)
-const dialogTitle = ref('')
-
-const currentRow = ref<TableData | null>(null)
-const actionType = ref('')
-
 const AddAction = () => {
-  dialogTitle.value = t('exampleDemo.add')
-  currentRow.value = null
-  dialogVisible.value = true
-  actionType.value = ''
+  push('/example/example-add')
 }
 
 const delLoading = ref(false)
@@ -258,83 +266,13 @@ const delData = async (row: TableData | null) => {
 }
 
 const action = (row: TableData, type: string) => {
-  dialogTitle.value = t(type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail')
-  actionType.value = type
-  currentRow.value = row
-  dialogVisible.value = true
-}
-
-const writeRef = ref<ComponentRef<typeof Write>>()
-
-const saveLoading = ref(false)
-
-const save = async () => {
-  const write = unref(writeRef)
-  const formData = await write?.submit()
-  if (formData) {
-    saveLoading.value = true
-    const res = await saveTableApi(formData)
-      .catch(() => {})
-      .finally(() => {
-        saveLoading.value = false
-      })
-    if (res) {
-      dialogVisible.value = false
-      currentPage.value = 1
-      getList()
-    }
-  }
+  push(`/example/example-${type}?id=${row.id}`)
 }
 </script>
 
 <template>
   <ContentWrap>
-    <Search :schema="allSchemas.searchSchema" @search="setSearchParams" @reset="setSearchParams" />
-
-    <div class="mb-10px">
-      <BaseButton type="primary" @click="AddAction">{{ t('exampleDemo.add') }}</BaseButton>
-      <BaseButton :loading="delLoading" type="danger" @click="delData(null)">
-        {{ t('exampleDemo.del') }}
-      </BaseButton>
-    </div>
-
-    <Table
-      v-model:pageSize="pageSize"
-      v-model:currentPage="currentPage"
-      :columns="allSchemas.tableColumns"
-      :data="dataList"
-      :loading="loading"
-      :pagination="{
-        total: total
-      }"
-      @register="tableRegister"
-    />
+    <a href="https://rancher.wanghaonet.com" target="_blank">rancher</a>
+    <ElDivider />
   </ContentWrap>
-
-  <Dialog v-model="dialogVisible" :title="dialogTitle">
-    <Write
-      v-if="actionType !== 'detail'"
-      ref="writeRef"
-      :form-schema="allSchemas.formSchema"
-      :current-row="currentRow"
-    />
-
-    <Detail
-      v-if="actionType === 'detail'"
-      :detail-schema="allSchemas.detailSchema"
-      :current-row="currentRow"
-    />
-
-    <template #footer>
-      <BaseButton
-        v-if="actionType !== 'detail'"
-        type="primary"
-        :loading="saveLoading"
-        @click="save"
-      >
-        {{ t('exampleDemo.save') }}
-      </BaseButton>
-      <BaseButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</BaseButton>
-    </template>
-  </Dialog>
 </template>
