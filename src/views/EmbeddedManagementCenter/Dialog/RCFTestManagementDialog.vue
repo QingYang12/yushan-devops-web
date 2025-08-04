@@ -40,6 +40,7 @@ const { getList, getElTableExpose, delList } = tableMethods
 const state = reactive({
   videoStatus:false,
   modelStatus:false,
+  selfMoveTestStatus:false,
   intervalId: null as number | null,
   imageUrl: null as string | null ,
   imageUrl2:'/public/logo1.png'
@@ -420,6 +421,33 @@ const modelChange = (val) => {
          startmodelApi(params);
     }
 }
+async function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function  selfMoveTestChange  (val) {
+  state.selfMoveTestStatus = val;
+  console.log("state.selfMoveTestStatus: ",state.selfMoveTestStatus);
+  if (state.selfMoveTestStatus) {
+        //自动展示
+        //B X    8  7
+        //左右    5  6
+        //BX     8  7
+        //BX     8  7
+        // 右 左    6   5
+        while(state.selfMoveTestStatus) {
+          const actions = ['8','7','5','6','8','7','8','7','6','5'];
+          for (let action of actions) {
+                if (!state.selfMoveTestStatus) break;
+                handpush('testtopic', 'testtopicg', action, 'c');
+                console.log('selfMoveTest  action ', action);
+                await delay(1000); // 等待1秒
+            }
+            
+        }
+  } else {
+    
+  }
+}
 
 </script>
 
@@ -437,6 +465,10 @@ const modelChange = (val) => {
     <div class="mb-10px">
       <ElText class="ml-8px!">模型自动操控：</ElText>
       <ElSwitch type="primary"  v-model="state.modelStatus"      @change="modelChange" active-text="Open" inactive-text="Close"      />
+    </div>
+    <div class="mb-10px">
+      <ElText class="ml-8px!">自动操控演示测试：</ElText>
+      <ElSwitch type="primary"  v-model="state.selfMoveTestStatus"      @change="selfMoveTestChange" active-text="Open" inactive-text="Close"      />
     </div>
     <div class="mb-10px">
       <BaseButton type="primary" @click="AddAction">{{ t('exampleDemo.add') }}</BaseButton>

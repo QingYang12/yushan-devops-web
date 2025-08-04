@@ -272,9 +272,9 @@ const action = (row: TableData, type: string) => {
 
 <template>
   <ContentWrap>
-    <a href="http://chat.wanghaonet.com" target="_blank">NextChat</a>
+    <a href="http://chat.wanghaonet.com" target="_blank">prometheus</a>
     <ElDivider />
-    <a href="http://dify.wanghaonet.com" target="_blank">dify</a>
+    <a href="http://dify.wanghaonet.com" target="_blank">grafana</a>
     <ElDivider />
   </ContentWrap>
 </template>

@@ -109,7 +109,26 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           title: t('router.workplace'),
           noCache: true
         }
-      }
+      },
+      {
+        path: 'wiki',
+        component: () => import('@/views/Dashboard/Wiki.vue'),
+        name: 'Wiki',
+        meta: {
+          title: t('wiki'),
+          noCache: true
+        }
+      },
+      {
+        path: 'Nas',
+        component: () => import('@/views/Dashboard/Nas.vue'),
+        name: 'Nas',
+        meta: {
+          title: t('Nas'),
+          noCache: true
+        }
+      },
+      
     ]
   },
   {
@@ -129,6 +148,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: '资源工具管理',
         meta: {
           title: '资源工具管理'
+        }
+      },
+      {
+        path: 'K8sManagementDialog',
+        component: () => import('@/views/DEVOPSManagementCenter/Dialog/K8sManagementDialog.vue'),
+        name: '云管理工具',
+        meta: {
+          title: '云管理工具'
         }
       }
     ]
@@ -221,6 +248,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '测试管理'
         }
+      },
+      {
+        path: 'TestTools',
+        component: () => import('@/views/TestManagementCenter/Dialog/TestTools.vue'),
+        name: '测试工具',
+        meta: {
+          title: '测试工具'
+        }
       }
     ]
   },
@@ -242,6 +277,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '实验管理'
         }
+      },
+      {
+        path: 'trainManagementDialog',
+        component: () => import('@/views/ExperimentalManagementCenter/Dialog/TrainManagementDialog.vue'),
+        name: '训练管理',
+        meta: {
+          title: '训练管理'
+        }
       }
     ]
   },
@@ -262,6 +305,27 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: '数据分析管理',
         meta: {
           title: '数据分析管理'
+        }
+      }
+    ]
+  },
+  {
+    path: '/monitorManagementCenter',
+    component: Layout,
+    redirect: '/monitorManagementCenter/DataManagementDialog',
+    name: '监控中心',
+    meta: {
+      title: "监控中心",
+      icon: 'vi-ep:trend-charts',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'MonitorTools',
+        component: () => import('@/views/monitorManagementCenter/MonitorTools.vue'),
+        name: ' 监控工具',
+        meta: {
+          title: '监控工具'
         }
       }
     ]

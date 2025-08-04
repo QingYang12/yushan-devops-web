@@ -87,6 +87,37 @@ export default [
                     title: '工作台',
                     noCache: true
                   }
+                },
+                {
+                  path: 'wiki',
+                  component: 'views/Dashboard/Wiki',
+                  name: 'wiki',
+                  status: Mock.Random.integer(0, 1),
+                  id: 3,
+                  type: 1,
+                  parentId: 1,
+                  title: 'wiki',
+                  permissionList: [
+                    {
+                      id: 1,
+                      label: '新增',
+                      value: 'add'
+                    },
+                    {
+                      id: 2,
+                      label: '编辑',
+                      value: 'edit'
+                    },
+                    {
+                      id: 3,
+                      label: '删除',
+                      value: 'delete'
+                    }
+                  ],
+                  meta: {
+                    title: 'wiki',
+                    noCache: true
+                  }
                 }
               ]
             },

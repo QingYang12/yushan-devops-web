@@ -15,3 +15,6 @@ export const handImageApi = (params: any) => {
 export const startmodelApi = (params: any) => {
   return request.get({ url: '/yushandevops/embedded/startmodel', params })
 }
+
+
+

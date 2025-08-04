@@ -272,9 +272,14 @@ const action = (row: TableData, type: string) => {
 
 <template>
   <ContentWrap>
-    <a href="http://chat.wanghaonet.com" target="_blank">NextChat</a>
+    <a href="http://testmetersphere.wanghaonet.com" target="_blank">metersphere</a>
     <ElDivider />
-    <a href="http://dify.wanghaonet.com" target="_blank">dify</a>
+    <ElDivider />
+    <a href="http://jiangyinghuo.wanghaonet.com/index.html" target="_blank">商城测试</a>
+    <ElDivider />
+    <a href="http://jiangstore.wanghaonet.com" target="_blank">店铺管理</a>
+    <ElDivider />
+    <a href="http://jiangadmin.wanghaonet.com" target="_blank">商城管理</a>
     <ElDivider />
   </ContentWrap>
 </template>
