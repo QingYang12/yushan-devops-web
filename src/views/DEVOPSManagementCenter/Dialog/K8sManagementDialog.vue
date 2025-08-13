@@ -273,6 +273,13 @@ const action = (row: TableData, type: string) => {
 <template>
   <ContentWrap>
     <a href="https://rancher.wanghaonet.com" target="_blank">rancher</a>
+      
+      <small style="color: #666; font-size: 12px; margin-left: 8px; display: block; margin-top: 5px; margin-left:20px;">
+        Rancher 是一个开源的容器管理平台，用于简化 Kubernetes 的部署和管理。
+      </small>
+      <small style="color: #666; font-size: 12px; margin-left: 8px; display: block; margin-top: 5px; margin-left:20px;">
+         管理员账号： admin      密码： admin_rancher
+      </small>
     <ElDivider />
   </ContentWrap>
 </template>

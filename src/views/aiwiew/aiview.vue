@@ -273,8 +273,18 @@ const action = (row: TableData, type: string) => {
 <template>
   <ContentWrap>
     <a href="http://chat.wanghaonet.com" target="_blank">NextChat</a>
+      <small style="color: #666; font-size: 12px; margin-left: 8px; display: block; margin-top: 5px; margin-left:20px;">
+        如无key使用默认模型对话，请设置里 模型（model）选 alibaba  下的 qwen-plus ,对话摘要模型 选   qwen-plus （alibaba） 然后刷新页面后进行对话
+        
+      </small>
+      <small style="color: #666; font-size: 12px; margin-left: 8px; display: block; margin-top: 5px; margin-left:20px;">
+        默认使用key为： sk-5a839dbb64074a62a1a78e9cb6502bef
+      </small>
     <ElDivider />
     <a href="http://dify.wanghaonet.com" target="_blank">dify</a>
+      <small style="color: #666; font-size: 12px; margin-left: 8px; display: block; margin-top: 5px; margin-left:20px;">
+         管理员账号： 736749722@qq.com      密码： wha16666
+      </small>
     <ElDivider />
   </ContentWrap>
 </template>

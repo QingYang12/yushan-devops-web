@@ -306,6 +306,13 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '数据分析管理'
         }
+      },{
+        path: 'DataManagementDialog',
+        component: () => import('@/views/DataManagementCenter/Dialog/DataManagementDialog.vue'),
+        name: '数据管理工具',
+        meta: {
+          title: '数据管理工具'
+        }
       }
     ]
   },
@@ -326,6 +333,69 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: ' 监控工具',
         meta: {
           title: '监控工具'
+        }
+      }
+    ]
+  },
+  {
+    path: '/monitorManagementCenter',
+    component: Layout,
+    redirect: '/monitorManagementCenter/DataManagementDialog',
+    name: '文件管理中心',
+    meta: {
+      title: "文件管理中心",
+      icon: 'vi-ep:trend-charts',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'MonitorTools',
+        component: () => import('@/views/monitorManagementCenter/MonitorTools.vue'),
+        name: ' 文件管理工具',
+        meta: {
+          title: '文件管理工具'
+        }
+      }
+    ]
+  },
+  {
+    path: '/monitorManagementCenter',
+    component: Layout,
+    redirect: '/monitorManagementCenter/DataManagementDialog',
+    name: '调度管理中心',
+    meta: {
+      title: "调度管理中心",
+      icon: 'vi-ep:trend-charts',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'MonitorTools',
+        component: () => import('@/views/monitorManagementCenter/MonitorTools.vue'),
+        name: ' 调度管理工具',
+        meta: {
+          title: '调度管理工具'
+        }
+      }
+    ]
+  },
+  {
+    path: '/monitorManagementCenter',
+    component: Layout,
+    redirect: '/monitorManagementCenter/DataManagementDialog',
+    name: '配置管理中心',
+    meta: {
+      title: "配置管理中心",
+      icon: 'vi-ep:trend-charts',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'MonitorTools',
+        component: () => import('@/views/monitorManagementCenter/MonitorTools.vue'),
+        name: ' 配置管理工具',
+        meta: {
+          title: '配置管理工具'
         }
       }
     ]

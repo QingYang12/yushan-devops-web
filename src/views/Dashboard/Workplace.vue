@@ -245,19 +245,128 @@ const { t } = useI18n()
         <ElSkeleton :loading="loading" animated>
           <ElRow>
             <ElCol
-              v-for="item in 9"
-              :key="`card-${item}`"
-              :xl="12"
-              :lg="12"
-              :md="12"
-              :sm="24"
-              :xs="24"
-              class="mb-10px"
-            >
-              <ElLink type="default" :underline="false">
-                {{ t('workplace.operation') }}{{ item }}
-              </ElLink>
-            </ElCol>
+                  :xl="12"
+                  :lg="12"
+                  :md="12"
+                  :sm="24"
+                  :xs="24"
+                  class="mb-10px"
+                >
+                <ElLink type="default"  href="http://wiki.wanghaonet.com/" target="_blank"
+                :underline="false">
+                wiki
+                </ElLink>
+                
+              </ElCol>
+              <ElCol
+                  :xl="12"
+                  :lg="12"
+                  :md="12"
+                  :sm="24"
+                  :xs="24"
+                  class="mb-10px"
+                >
+                <ElLink type="default"  href="http://nas.wanghaonet.com/" target="_blank"
+                  :underline="false">
+                  nas
+                  </ElLink>
+              </ElCol>
+              <ElCol
+                  :xl="12"
+                  :lg="12"
+                  :md="12"
+                  :sm="24"
+                  :xs="24"
+                  class="mb-10px"
+                >
+                <ElLink type="default"  href="https://rancher.wanghaonet.com/" target="_blank"
+                  :underline="false">
+                  rancher
+                  </ElLink>
+              </ElCol>
+              <ElCol
+                  :xl="12"
+                  :lg="12"
+                  :md="12"
+                  :sm="24"
+                  :xs="24"
+                  class="mb-10px"
+                >
+                <ElLink type="default"  href="http://chat.wanghaonet.com/" target="_blank"
+                  :underline="false">
+                  NextChat
+                  </ElLink>
+              </ElCol>
+              <ElCol
+                  :xl="12"
+                  :lg="12"
+                  :md="12"
+                  :sm="24"
+                  :xs="24"
+                  class="mb-10px"
+                >
+                <ElLink type="default"  href="http://dify.wanghaonet.com/" target="_blank"
+                  :underline="false">
+                  dify
+                  </ElLink>
+              </ElCol>
+                
+              <ElCol
+                  :xl="12"
+                  :lg="12"
+                  :md="12"
+                  :sm="24"
+                  :xs="24"
+                  class="mb-10px"
+                >
+                <ElLink type="default"  href="http://testmetersphere.wanghaonet.com/" target="_blank"
+                  :underline="false">
+                  metersphere
+                  </ElLink>
+              </ElCol>
+                
+              <ElCol
+                  :xl="12"
+                  :lg="12"
+                  :md="12"
+                  :sm="24"
+                  :xs="24"
+                  class="mb-10px"
+                >
+                <ElLink type="default"  href="http://wiki.wanghaonet.com/" target="_blank"
+                  :underline="false">
+                  prometheus
+                  </ElLink>
+              </ElCol>
+                
+              <ElCol
+                  :xl="12"
+                  :lg="12"
+                  :md="12"
+                  :sm="24"
+                  :xs="24"
+                  class="mb-10px"
+                >
+                <ElLink type="default"  href="http://wiki.wanghaonet.com/" target="_blank"
+                  :underline="false">
+                  grafana
+                  </ElLink>
+              </ElCol>
+                
+                
+              <ElCol
+                  :xl="12"
+                  :lg="12"
+                  :md="12"
+                  :sm="24"
+                  :xs="24"
+                  class="mb-10px"
+                >
+                <ElLink type="default"  href="http://wiki.wanghaonet.com/" target="_blank"
+                  :underline="false">
+                  skywalking
+                  </ElLink>
+</ElCol>
           </ElRow>
         </ElSkeleton>
       </ElCard>
