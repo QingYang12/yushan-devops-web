@@ -102,7 +102,12 @@ getAllApi()
 
 <template>
   <ContentWrap>
-    <a href="http://wiki.wanghaonet.com" target="_blank">wiki </a>
-    <ElDivider />
+    <a href="http://wiki.wanghaonet.com" target="_blank">wiki</a>
+      
+      <small style="color: #666; font-size: 12px; margin-left: 8px; display: block; margin-top: 5px; margin-left:20px;">
+        <p>wiki.js 是一个开源的wiki管理工具 .用于创建、管理、分享知识。</p>
+        <p>此处用于记录文档知识分享 自行创建账号编写即可</p>
+      </small>
+      <ElDivider />
   </ContentWrap>
 </template>

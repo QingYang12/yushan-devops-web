@@ -103,6 +103,11 @@ getAllApi()
 <template>
   <ContentWrap>
     <a href="http://nas.wanghaonet.com" target="_blank">NAS </a>
+    <small style="color: #666; font-size: 12px; margin-left: 8px; display: block; margin-top: 5px; margin-left:20px;">
+      
+       <p>jellyfin 是一个开源的NAS开源管理工具 .用于创建、管理 视频文件媒体库</p>
+        <p>此处用于视频文件保存管理。</p>
+      </small>
     <ElDivider />
   </ContentWrap>
 </template>

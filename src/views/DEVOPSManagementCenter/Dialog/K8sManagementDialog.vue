@@ -281,5 +281,11 @@ const action = (row: TableData, type: string) => {
          管理员账号： admin      密码： admin_rancher
       </small>
     <ElDivider />
+    <a href="http://tekton.wanghaonet.com" target="_blank">tekton</a>
+      
+      <small style="color: #666; font-size: 12px; margin-left: 8px; display: block; margin-top: 5px; margin-left:20px;">
+        tekton 是一个开源的CICD管理工具，用于简化 Kubernetes 的CICD部署和管理。
+      </small>
+      <ElDivider />
   </ContentWrap>
 </template>
